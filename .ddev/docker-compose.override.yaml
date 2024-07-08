@@ -1,0 +1,22 @@
+version: "3.6"
+
+services:
+  web:
+    environment:
+      PHP_IDE_CONFIG: serverName=practice.ddev.site
+    labels:
+      traefik.enable: true
+      traefik.http.routers.practice-phpmyadmin.rule: Host(`practice-phpmyadmin.ddev.site`)
+      traefik.http.services.practice-phpmyadmin.loadbalancer.server.port: 8036
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    labels:
+      traefik.enable: true
+      traefik.http.routers.practice-phpmyadmin.rule: Host(`practice-phpmyadmin.ddev.site`)
+      traefik.http.services.practice-phpmyadmin.loadbalancer.server.port: 8036
+    depends_on:
+      - db

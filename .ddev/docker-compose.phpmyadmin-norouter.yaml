@@ -1,0 +1,21 @@
+version: "3.6"
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: db
+      PMA_PASSWORD: db
+    ports:
+      - "8036:80"
+    networks:
+      - ddev
+    depends_on:
+      - db
+
+networks:
+  ddev:
+    external:
+      name: ddev_default
